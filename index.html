@@ -28,7 +28,7 @@
     \ddot x + \eta K_D \dot x + \eta K_P(x - u) = 0 \label{eq:SysEqn}
     \end{align}
 
-     <p> ここに、\(x\)は位置、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力、\(\eta(>0)\)は効率係数です。
+     <p> ここに、\(x\)は位置、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力、\(\eta(>0)\)は駆動効率係数です。
       目的とする制御性能を規範モデルとして次式で与えます。
      </p> 
 
@@ -44,7 +44,7 @@
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
     \end{align}
 
-    <p>ここに、\(\hat\eta\)は効率係数\(\eta\)の推定値です。
+    <p>ここに、\(\hat\eta\)は駆動効率\(\eta\)の推定値です。
       式\eqref{eq:ModEta}を式\eqref{eq:SysEqn}に代入して次式を得ます。
     </p>
 
@@ -52,7 +52,7 @@
     \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
     <p> 式\eqref{eq:SysEqn2}において、\(\hat\eta=\eta\)であれば、規範モデル\eqref{eq:MdlEqn}と一致します。
-      すなわち、効率係数\(\eta\)のばらつきに関係なく目的とする制御性能が動的システムに対して実現できます。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
+      すなわち、駆動効率\(\eta\)のばらつきと変動に関係なく目的とする制御性能が動的システムに対して実現できます。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
      
     \begin{align}
     \ddot x + a \dot x + b (x - u) = (1- \frac{\eta}{\hat\eta})\{a \dot x + b (x - u) \} \label{eq:SysEqn3}
@@ -111,21 +111,25 @@
    G(s) = \frac{1+cs}{s^2+as+b} \label{eq:TransFanc}
   \end{align}
  
-  <p>式\eqref{eq:TransFanc}の\(s\)に実数を代入すると\(G(s)\)も実数になり、s面の右半平面\(Re[s]\ge0\)に\(G(s)\)の極(分母：\(s^2+as+b=0\)の解)がないので、強正実条件(1)と(2)は確認できます。次に強正実条件(3)を確認します。</p>
+  <p>式\eqref{eq:TransFanc}の\(s\)に実数を代入すると\(G(s)\)も実数になり、
+    s面の右半平面\(Re[s]\ge0\)に\(G(s)\)の極(分母：\(s^2+as+b=0\)の解)がないので、
+    強正実条件(1)と(2)は確認できます。次に強正実条件(3)を確認します。
+    式\eqref{eq:TransFanc}の\(s\)に\(j\omega\)を代入すると次式が得られます。
+  </p>
  
   \begin{align}
-   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}] > 0\label{eq:RealPart}
+   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}]\label{eq:RealPart}
   \end{align}
 
-<p>分母を有利化すると次式になります。</p>
+<p>分母を有利化すると式\eqref{eq:RealPart}は次式になります。</p>
 
   \begin{align*}
    Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b-\omega^2 +ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
    &= Re[\frac{(b-\omega^2+ac\omega^2)+j\{c\omega(b-\omega^2)-a\omega\}}{(b -\omega^2)^2 + a^2\omega^2}]\\
-   &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2}> 0 \label{eq:RealPart2}
+   &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2} \label{eq:RealPart2}
    \end{align*}
 
-  <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、強正実条件(3)が満足されます。</p>
+  <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、\(Re[G(j\omega)]>0\)となり、強正実条件(3)が満足されます。</p>
 
   <p>動的システム\eqref{eq:SysEqn}を規範モデル\eqref{eq:MdlEqn}に適応させる適応制御則と強正実条件を以下にまとめます。</p>
   <p>適応制御則：</p>
@@ -134,11 +138,12 @@
   \end{align*}
 
   <p>強誠実条件：</p>
-  \begin{align*}
-   c > \frac{1}{a}
-  \end{align*} 
+  \begin{align}
+   c > \frac{1}{a} \label{eq:STR_Cond}
+  \end{align} 
 
    <p><a href="https://aoyamakohbo.github.io/AdaptIdent/">->適応同定</a></p>
+   <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
 
 </html>
