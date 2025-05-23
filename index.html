@@ -18,21 +18,25 @@
   </head>
 
   <body>
-    <p> 動的システムの適応制御について考察しましょう。</p>
+    <p>位置決め装置などのサーボ機構では駆動力の発生効率\(\eta\)にばらつきがあるため、
+      位置制御性能にばらつきが生じます。そこで、駆動力の発生効率\(\eta\)にばらつきがあっても、
+      常に一定の制御性能を実現するための適応制御について考察しましょう。
+      サーボ制御には比例微分制御が多く採用されるので、動的システムを次式とします。
+    </p>
 
     \begin{align}
     \ddot x + \eta K_D \dot x + \eta K_P(x - u) = 0 \label{eq:SysEqn}
     \end{align}
 
-     <p> ここに、\(x\)は出力変位、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は変位入力、\(\eta\)は変換係数です。
-      計算機の中で計算する規範モデルを次式で与えます。
+     <p> ここに、\(x\)は位置、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力、\(\eta(>0)\)は効率係数です。
+      目的とする制御性能を規範モデルとして次式で与えます。
      </p> 
 
     \begin{align}
     \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
     \end{align}
 
-    <p> ここに、\(x_M\)は規範モデルの振幅です。
+    <p> ここに、\(x_M\)は規範モデルの位置です。
       微分ゲイン\(K_D\)と比例ゲイン\(K_P\)は次式で調整可能とします。
     </p>
 
@@ -40,14 +44,15 @@
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
     \end{align}
 
-    <p>ここに、\(\hat\eta\)は\(\eta\)の推定値です。
+    <p>ここに、\(\hat\eta\)は効率係数\(\eta\)の推定値です。
       式\eqref{eq:ModEta}を式\eqref{eq:SysEqn}に代入して次式を得ます。
     </p>
 
     \begin{align}
     \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
-    <p> 式\eqref{eq:SysEqn2}において、\(\hat\eta=\eta\)であれば、規範モデル\eqref{eq:MdlEqn}と一致します。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
+    <p> 式\eqref{eq:SysEqn2}において、\(\hat\eta=\eta\)であれば、規範モデル\eqref{eq:MdlEqn}と一致します。
+      すなわち、効率係数\(\eta\)のばらつきに関係なく目的とする制御性能が動的システムに対して実現できます。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
      
     \begin{align}
     \ddot x + a \dot x + b (x - u) = (1- \frac{\eta}{\hat\eta})\{a \dot x + b (x - u) \} \label{eq:SysEqn3}
