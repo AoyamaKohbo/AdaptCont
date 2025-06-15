@@ -69,7 +69,7 @@
      <p> ここで、\(e = x_M - x\)、\(\tilde \eta = \hat\eta - \eta\)とおくと次式が得られます。 </p> 
 
     \begin{align}
-    \ddot e + a e + b e = \frac{\tilde\eta}{\hat\eta} \{- a \dot x - b (x - bx)\} \label{eq:ErrEqn}
+    \ddot e + a e + b e = \frac{\tilde\eta}{\hat\eta} \{- a \dot x - b (x - u)\} \label{eq:ErrEqn}
     \end{align}
 
      <p><a href="https://aoyamakohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために線形定常ブロックの出力\(\varepsilon\)と非線形時変ブロック\(r\)とを次式で与えます。 </p> 
@@ -128,7 +128,7 @@
 <p>分母を有利化すると式\eqref{eq:RealPart}は次式になります。</p>
 
   \begin{align*}
-   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b-\omega^2 +ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
+   Re[G(j\omega)] &= Re[\frac{(1+jc\omega)(b-\omega^2 - ja\omega)}{(b -\omega^2)^2 + a^2\omega^2}]\\
    &= Re[\frac{(b-\omega^2+ac\omega^2)+j\{c\omega(b-\omega^2)-a\omega\}}{(b -\omega^2)^2 + a^2\omega^2}]\\
    &= \frac{b+(ac-1)\omega^2}{(b -\omega^2)^2 + a^2\omega^2} \label{eq:RealPart2}
    \end{align*}
