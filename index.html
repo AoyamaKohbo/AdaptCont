@@ -22,7 +22,7 @@
 
     <p>位置決め装置などのサーボ機構では駆動力の効率\(\eta\)にばらつきや、経年、温度による変動があるため、
       位置制御性能に変動が生じます。そこで、駆動力の効率\(\eta\)にばらつきや変動があっても、
-      常に一定の制御性能を実現するための適応制御について考察しましょう。
+      常に一定の制御性能を実現するための適応制御について考察します。
       サーボ制御には比例微分制御が多く採用されるので、動的システムを次式とします。
     </p>
 
@@ -38,9 +38,8 @@
     \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
     \end{align}
 
-    <p> ここに、\(x_M\)は規範モデルの位置です。
-      微分ゲイン\(K_D\)と比例ゲイン\(K_P\)は次式で調整可能とします。
-    </p>
+    <p> ここに、\(x_M\)は規範モデルの位置です。係数\(a > 0\)、\(b > 0\)とします。</p>
+    <p>微分ゲイン\(K_D\)と比例ゲイン\(K_P\)を次式で調整します。</p>
 
     \begin{align}
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
@@ -53,7 +52,7 @@
     \begin{align}
     \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
-    <p> 式\eqref{eq:SysEqn2}において、\(\hat\eta=\eta\)であれば、規範モデル\eqref{eq:MdlEqn}と一致します。
+    <p> 式\eqref{eq:SysEqn2}において、\(\eta/\hat\eta=1\)(\(\hat\eta=\eta\))であれば、規範モデル\eqref{eq:MdlEqn}と一致します。
       すなわち、駆動効率\(\eta\)のばらつきと変動に関係なく目的とする制御性能が動的システムに対して実現できます。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
      
     \begin{align}
@@ -122,7 +121,7 @@
   </p>
  
   \begin{align}
-   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}]\label{eq:RealPart}
+   Re[G(j\omega)] = Re[\frac{1+jc\omega}{-\omega^2 +ja\omega + b}] = Re[\frac{1+jc\omega}{b-\omega^2 +ja\omega}]\label{eq:RealPart}
   \end{align}
 
 <p>分母を有利化すると式\eqref{eq:RealPart}は次式になります。</p>
@@ -144,7 +143,11 @@
   <p>強誠実条件：</p>
   \begin{align}
    c > \frac{1}{a} \label{eq:STR_Cond}
-  \end{align} 
+  \end{align}
+
+  <p><a href="https://aoyamakohbo.github.io/AdaptContVib1D/">モデル規範適応制御の数値解析(数値実験)</a>
+    では数値シミュレーションでモデル規範適応制御の動作を確認します。
+ </p>
 
    <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
