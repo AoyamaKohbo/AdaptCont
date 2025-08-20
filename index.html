@@ -19,85 +19,89 @@
 
   <body>
     <h3>モデル規範適応制御</h3>
-
-    <p>位置決め装置などのサーボ機構では駆動力の効率\(\eta\)にばらつきや、経年、温度による変動があるため、
-      位置制御性能に変動が生じます。そこで、駆動力の効率\(\eta\)にばらつきや変動があっても、
-      常に一定の制御性能を実現するための適応制御について考察します。
-      サーボ制御には比例微分制御が多く採用されるので、動的システムを次式とします。
-    </p>
-
+    <p>位置決め装置などのサーボ機構には駆動効率によるにばらつき、経年変化、温度による変動などの不確定性が発生し、
+      運動制御性能に変動が生じます。
+      そこで、ここでは不確定性があっても常に一定の運動制御性能を実現するための適応制御について考察します。</p>
+      <p>まず、運動制御には比例微分フィードバックが有効なので、
+      運動制御システムを次式とします。</p>
     \begin{align}
-    \ddot x + \eta K_D \dot x + \eta K_P(x - u) = 0 \label{eq:SysEqn}
+     \ddot x  &=~ v,    \label{eq:PosSys}\\
+      v&=~ - K_D \dot x - K_P(x - u). \label{eq:DrvFrc}
+    \end{align}
+    <p>ここに、\(x\)は位置、\(v\)は比例微分フィードバック、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力です。</p>
+
+    <p>不確定性を\(\eta\)とし、運動システム\eqref{eq:PosSys}を次式とします。</p>
+    \begin{align}
+     \ddot x  &=~ \eta v \label{eq:MtnSys}
     \end{align}
 
-     <p> ここに、\(x\)は位置、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力、\(\eta(>0)\)は駆動効率係数です。
-      目的とする制御性能を規範モデルとして次式で与えます。
-     </p> 
-
-    \begin{align}
-    \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
-    \end{align}
-
-    <p> ここに、\(x_M\)は規範モデルの位置です。係数\(a > 0\)、\(b > 0\)とします。</p>
-    <p>微分ゲイン\(K_D\)と比例ゲイン\(K_P\)を次式で調整します。</p>
-
+    <p>不確定性\(\eta\)は未知であるため、
+      その推定値を\(\hat\eta\)として、
+      微分ゲイン\(K_D\)と比例ゲイン\(K_P\)を次式とします。</p>
     \begin{align}
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
     \end{align}
+    <p>係数\(a > 0\)、\(b > 0\)とします。
+      式\eqref{eq:ModEta}を制御システム\eqref{eq:DrvFrc}に代入して次式を得ます。</p>
+    \begin{align}
+    v&=~ - \frac{1}{\hat\eta}\{a\dot x + b(x - u)\}. \label{eq:DrvFrc2}
+    \end{align}
 
-    <p>ここに、\(\hat\eta\)は駆動効率\(\eta\)の推定値です。
-      式\eqref{eq:ModEta}を式\eqref{eq:SysEqn}に代入して次式を得ます。
-    </p>
-
+    <p>比例微分フィードバック\eqref{eq:DrvFrc2}を運動システム\eqref{eq:MtnSys}に代入して次式の運動制御システムを得ます。</p>
     \begin{align}
     \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
-    <p> 式\eqref{eq:SysEqn2}において、\(\eta/\hat\eta=1\)(\(\hat\eta=\eta\))であれば、規範モデル\eqref{eq:MdlEqn}と一致します。
-      すなわち、駆動効率\(\eta\)のばらつきと変動に関係なく目的とする制御性能が動的システムに対して実現できます。式\eqref{eq:SysEqn2}を次式のように変形します。</p>
-     
+
+    <p>ここで、運動制御システム\eqref{eq:SysEqn2}の目標性能を実現する規範モデルを次式とします。</p> 
+    \begin{align}
+    \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
+    \end{align}
+    <p>ここに、\(x_M\)は規範モデルの変位です。</p>
+
+    <p>運動制御システム\eqref{eq:SysEqn2}において\(\hat\eta=\eta\)であれば運動制御システム\eqref{eq:SysEqn2}は規範モデル\eqref{eq:MdlEqn}と一致します。
+      すなわち、不確定性\(\eta\)は推定値\(\hat\eta\)に相殺されて運動制御システムは目的とする制御性能を実現できます。
+      式\eqref{eq:SysEqn2}を次式のように変形します。</p> 
     \begin{align}
     \ddot x + a \dot x + b (x - u) = (1- \frac{\eta}{\hat\eta})\{a \dot x + b (x - u) \} \label{eq:SysEqn3}
     \end{align}
 
-     <p> 式\eqref{eq:MdlEqn}の両辺から式\eqref{eq:SysEqn3}の両辺をそれぞれ引きます。 </p> 
-
+     <p>式\eqref{eq:MdlEqn}の両辺から式\eqref{eq:SysEqn3}の両辺をそれぞれ引き、比例微分フードバック\eqref{eq:DrvFrc2}を考慮すると次式を得ます。 </p> 
     \begin{align*}
-    (\ddot x_M - \ddot x) + a(\dot x_M - \dot x)  + b(x_M - x) = (1 - \frac{\eta}{\hat\eta})\{- a \dot x - b (x - u) \}
+    (\ddot x_M - \ddot x) + a(\dot x_M - \dot x)  + b(x_M - x) = (\hat\eta -\eta)v
     \end{align*}
 
      <p> ここで、\(e = x_M - x\)、\(\tilde \eta = \hat\eta - \eta\)とおくと次式が得られます。 </p> 
 
     \begin{align}
-    \ddot e + a e + b e = \frac{\tilde\eta}{\hat\eta} \{- a \dot x - b (x - u)\} \label{eq:ErrEqn}
+    \ddot e + a e + b e = \tilde\eta v \label{eq:ErrEqn}
     \end{align}
 
-     <p><a href="https://aoyamakohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために線形定常ブロックの出力\(\varepsilon\)と非線形時変ブロック\(r\)とを次式で与えます。 </p> 
+     <p><a href="https://aoyamakohbo.github.io/HypStb/">Popovの超安定論</a>を適用するために線形定常ブロックの出力\(\varepsilon\)と非線形時変ブロック\(w\)とを次式で与えます。 </p> 
 
     \begin{align}
-    \varepsilon = e + c\dot e,~~~r =  \frac{\tilde\eta}{\hat\eta}\{a \dot x + b (x - u)\}. \label{eq:ExdEqn}
+    \varepsilon = e + c\dot e,~~~w = -\tilde\eta v. \label{eq:ExdEqn}
     \end{align}
 
-    式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-r\)と出力\(\varepsilon\)の関係式は次式となります。
+    式\eqref{eq:ErrEqn}と\eqref{eq:ExdEqn} から線形前向きブロックの入力\(-w\)と出力\(\varepsilon\)の関係式は次式となります。
     \begin{align}
-    \ddot e + \hat a e + \hat b e = -r,~~~\varepsilon = e + c\dot e.  \label{eq:ErrEqn2}
+    \ddot e + \hat a e + \hat b e = -w,~~~\varepsilon = e + c\dot e.  \label{eq:ErrEqn2}
     \end{align}
 
     <p> すると、Popov積分は次式となります。 </p> 
 
    \begin{align}
-   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}\frac{\tilde\eta}{\hat\eta} \{a \dot x + b (x - u)\}\varepsilon dt \label{eq:IntgEqn}
+   \int_{0}^{t}w\varepsilon dt= -\int_{0}^{t}\tilde\eta v\varepsilon dt \label{eq:IntgEqn}
    \end{align}
    
     <p>ここで、\(\dot{\tilde\eta}\)に対して次式を与えます。 </p> 
    
    \begin{align}
-   \dot{\tilde{\eta}} = \alpha \frac{\{a \dot x + b (x - u)\}\varepsilon}{\hat\eta} \label{eq:AdptRule}
+   \dot{\tilde{\eta}} = -\alpha v\varepsilon \label{eq:AdptRule}
    \end{align}
    
     <p> ここに、\(\alpha\)は定数です。 式\eqref{eq:IntgEqn}に式\eqref{eq:AdptRule}を代入すると次式が得られます。 </p> 
-   
    \begin{align*}
-   \int_{0}^{t}r\varepsilon dt= \int_{0}^{t}\frac{1}{\alpha}\dot{\tilde\eta}\eta dt = [\frac{1}{2\alpha}\tilde\eta^2 ]_0^t = \frac{1}{2\alpha}\{\tilde\eta(t)^2 - \tilde\eta(0)^2\} \ge -\frac{1}{2\alpha}\tilde\eta(0)^2
+   \int_{0}^{t}w\varepsilon dt= \int_{0}^{t}\frac{1}{\alpha}\dot{\tilde\eta}\eta dt = [\frac{1}{2\alpha}\tilde\eta^2 ]_0^t = \frac{1}{2\alpha}\{\tilde\eta(t)^2 - \tilde\eta(0)^2\} \ge -\frac{1}{2\alpha}\tilde\eta(0)^2
    \end{align*}
 
    <p> これで式\eqref{eq:AdptRule}によりPopovの積分不等式が成立することが確認できます。
@@ -106,7 +110,7 @@
   </p> 
   
   \begin{align}
-   \dot{\hat{\eta}} = \alpha \frac{\{a \dot x + b (x - u)\}\varepsilon}{\hat\eta} \label{eq:AdptRule2}
+   \dot{\hat{\eta}} = -\alpha v\varepsilon \label{eq:AdptRule2}
   \end{align}
 
   <p>次に強正実条件を確認します。式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
@@ -134,16 +138,17 @@
 
   <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、\(Re[G(j\omega)]>0\)となり、強正実条件(3)が満足されます。</p>
 
-  <p>動的システム\eqref{eq:SysEqn}を規範モデル\eqref{eq:MdlEqn}に適応させる適応制御則と強正実条件を以下にまとめます。</p>
+  <p>運動制御システム\eqref{eq:SysEqn2}を規範モデル\eqref{eq:MdlEqn}に適応させる適応制御則と強正実条件を以下にまとめます。</p>
   <p>適応制御則：</p>
   \begin{align*}
-   \dot{\hat{\eta}} = \alpha \frac{\{a \dot x + b (x - u)\}\varepsilon}{\hat\eta}
+    \dot{\hat{\eta}} &=~ -\alpha v\varepsilon,\\
+    v&=~ - \frac{1}{\hat\eta}\{a\dot x + b(x - u)\}. 
   \end{align*}
 
   <p>強誠実条件：</p>
-  \begin{align}
+  \begin{align*}
    c > \frac{1}{a} \label{eq:STR_Cond}
-  \end{align}
+  \end{align*}
 
   <p><a href="https://aoyamakohbo.github.io/AdaptContVib1D/">モデル規範適応制御の数値解析(数値実験)</a>
     では数値シミュレーションでモデル規範適応制御の動作を確認します。
