@@ -23,20 +23,15 @@
       運動制御性能に変動が生じます。
       そこで、ここでは不確定性があっても常に一定の運動制御性能を実現するための適応制御について考察します。</p>
       <p>まず、運動制御には比例微分フィードバックが有効なので、
-      運動制御システムを次式とします。</p>
+      不確定性を\(\eta\)とし、運動制御システムを次式とします。</p>
     \begin{align}
-     \ddot x  &=~ v,    \label{eq:PosSys}\\
+     \ddot x  &=~ \eta v,    \label{eq:PosSys}\\
       v&=~ - K_D \dot x - K_P(x - u). \label{eq:DrvFrc}
     \end{align}
     <p>ここに、\(x\)は位置、\(v\)は比例微分フィードバック、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力です。</p>
 
-    <p>不確定性を\(\eta\)とし、運動システム\eqref{eq:PosSys}を次式とします。</p>
-    \begin{align}
-     \ddot x  &=~ \eta v \label{eq:MtnSys}
-    \end{align}
-
-    <p>不確定性\(\eta\)は未知であるため、
-      その推定値を\(\hat\eta\)として、
+    <p>理想的には不確定性\(\eta=1\)ですが、不確定なので未知となります。
+      そこで、その推定値を\(\hat\eta\)として、
       微分ゲイン\(K_D\)と比例ゲイン\(K_P\)を次式とします。</p>
     \begin{align}
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
