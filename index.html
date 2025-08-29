@@ -19,6 +19,8 @@
 
   <body>
     <h3>モデル規範適応制御</h3>
+
+    <h3>\(\S\) 不確定性を有する運動システムの適応制御</h3>
     <p>位置決め装置などのサーボ機構には駆動効率によるにばらつき、経年変化、温度による変動などの不確定性が発生し、
       運動制御性能に変動が生じます。
       そこで、ここでは不確定性があっても常に一定の運動制御性能を実現するための適応制御について考察します。</p>
@@ -31,7 +33,7 @@
     <p>ここに、\(x\)は位置、\(v\)は比例微分フィードバック、\(K_D\)は微分ゲイン、\(K_P\)は比例ゲイン、\(u\)は位置入力です。</p>
 
     <p>理想的には不確定性\(\eta=1\)ですが、不確定なので未知となります。
-      そこで、その推定値を\(\hat\eta\)として、
+      そこで、\(\eta\)の推定値を\(\hat\eta\)として、
       微分ゲイン\(K_D\)と比例ゲイン\(K_P\)を次式とします。</p>
     \begin{align}
     K_D = \frac{a}{\hat\eta},~~~~K_P = \frac{b}{\hat\eta}. \label{eq:ModEta}
@@ -47,12 +49,13 @@
     \ddot x + a\frac{\eta}{\hat\eta}\dot x + b\frac{\eta}{\hat\eta}(x - u) = 0 \label{eq:SysEqn2}
     \end{align}
 
-    <p>ここで、運動制御システム\eqref{eq:SysEqn2}の目標性能を実現する規範モデルを次式とします。</p> 
+    <p>ここで、運動制御システム\eqref{eq:SysEqn2}の目標性能(\(\eta=1\))を実現する規範モデルを次式とします。</p> 
     \begin{align}
     \ddot x_M + a\dot x_M + b(x_M - u)= 0 \label{eq:MdlEqn}
     \end{align}
     <p>ここに、\(x_M\)は規範モデルの変位です。</p>
 
+    <h3>\(\S\) 適応制御則の導出</h3>
     <p>運動制御システム\eqref{eq:SysEqn2}において\(\hat\eta=\eta\)であれば運動制御システム\eqref{eq:SysEqn2}は規範モデル\eqref{eq:MdlEqn}と一致します。
       すなわち、不確定性\(\eta\)は推定値\(\hat\eta\)に相殺されて運動制御システムは目的とする制御性能を実現できます。
       式\eqref{eq:SysEqn2}を次式のように変形します。</p> 
@@ -108,6 +111,7 @@
    \dot{\hat{\eta}} = -\alpha v\varepsilon \label{eq:AdptRule2}
   \end{align}
 
+  <h3>\(\S\) 強正実条件</h3>
   <p>次に強正実条件を確認します。式\eqref{eq:ErrEqn2}の前向き線形ブロックの伝達関数\(G(s)=\varepsilon(s)/r(s)\)は次式となります。</p>
   \begin{align}
    G(s) = \frac{1+cs}{s^2+as+b} \label{eq:TransFanc}
@@ -133,6 +137,7 @@
 
   <p>分子の中の\(ac-1>0\)、すなわち\(c>1/a\)であれば、\(Re[G(j\omega)]>0\)となり、強正実条件(3)が満足されます。</p>
 
+  <h3>\(\S\) 適応制御則と強誠実条件</h3>
   <p>運動制御システム\eqref{eq:SysEqn2}を規範モデル\eqref{eq:MdlEqn}に適応させる適応制御則と強正実条件を以下にまとめます。</p>
   <p>適応制御則：</p>
   \begin{align*}
